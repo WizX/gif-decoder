@@ -1,0 +1,59 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 26
+    buildToolsVersion "27.0.1"
+    publishNonDefault true
+
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+
+//        ndk {
+//            moduleName "nsgif"
+//            platformVersion 18
+//            CFlags.add("-std=c99")
+//            ldLibs.addAll(["log", "jnigraphics"])
+//            abiFilters.addAll(['armeabi', 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'])
+//            abiFilters 'x86', 'x86_64', 'armeabi', 'armeabi-v7a', 'arm64-v8a'
+//        }
+        externalNativeBuild {
+            cmake {
+                cppFlags ""
+            }
+        }
+    }
+
+
+//    buildTypes {
+//        release {
+//            minifyEnabled false
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//        }
+//    }
+
+    buildTypes {
+//        debug {
+//            ndk {
+//                CFlags.add("-DNATIVE_LOG")
+//            }
+//        }
+        release {
+            minifyEnabled false
+            proguardFiles.add(file('proguard-rules.pro'))
+        }
+    }
+    // 配置CMakeLists.txt路径
+    externalNativeBuild {
+        cmake {
+            path "CMakeLists.txt"   // 设置所要编写的c源码位置，以及编译后so文件的名字
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+}
